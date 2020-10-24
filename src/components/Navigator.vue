@@ -1,14 +1,27 @@
 <template>
   <div class="nav">
     <div class="left-nav">
-      <div class="nav-item" v-for="item in leftItems" :key="item.index">
+      <router-link
+        class="nav-item"
+        v-for="item in leftItems"
+        :key="item.index"
+        :to="item.to"
+      >
+        {{ item.label }}
+      </router-link>
+      <!-- <div class="nav-item" v-for="item in leftItems" :key="item.index">
         <router-link :to="item.to">{{ item.label }}</router-link>
-      </div>
+      </div> -->
     </div>
     <div class="right-nav">
-      <div class="nav-item" v-for="item in rightItems" :key="item.index">
-        <router-link :to="item.to">{{ item.label }}</router-link>
-      </div>
+      <router-link
+        class="nav-item"
+        v-for="item in rightItems"
+        :key="item.index"
+        :to="item.to"
+      >
+        {{ item.label }}
+      </router-link>
     </div>
   </div>
 </template>
@@ -55,19 +68,15 @@ div.nav {
       width: 150px;
       height: 80px;
       cursor: pointer;
-      a {
-        text-decoration: none;
-        color: black;
-      }
+      text-decoration: none;
+      color: black;
       &:hover {
         background: black;
-        a {
-          text-decoration: none;
-          color: white;
-        }
-        &:focus {
-          outline: none;
-        }
+        // text-decoration: none;
+        color: white;
+      }
+      &:focus {
+        outline: none;
       }
     }
   }
