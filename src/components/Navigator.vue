@@ -26,8 +26,8 @@ export default {
         { index: "3", label: "新文章", to: "/" },
       ],
       rightItems: [
-        { index: "0", value: "注册" },
-        { index: "1", value: "登陆" },
+        { index: "0", label: "注册", to: "/" },
+        { index: "1", label: "登陆", to: "/" },
       ],
     };
   },
@@ -64,6 +64,9 @@ div.nav {
         a {
           text-decoration: none;
           color: white;
+        }
+        &:focus {
+          outline: none;
         }
       }
     }
