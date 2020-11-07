@@ -1,9 +1,11 @@
 <template>
   <div class="articles">
     {{ article }}
+    <button @click="test()">测试graphql</button>
   </div>
 </template>
 <script>
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 export default {
   name: "articles-home",
   data() {
@@ -11,6 +13,11 @@ export default {
       article: "这里是近期文章列表",
     };
   },
+  methods:{
+    ...mapActions('user',{
+      test:'sendGraphql'
+    })
+  }
 };
 </script>
 <style lang="less" scoped>
