@@ -2,7 +2,9 @@ import { myClient } from './gql/graphql.client'
 import { USER_REGISTER } from './gql/user.gql';
 export default {
   namespaced: true,
-  state: {},
+  state: {
+    
+  },
   mutations: {
     testGraphql(state:any , data: any) {
       console.log(data);

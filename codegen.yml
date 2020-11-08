@@ -1,0 +1,6 @@
+overwrite: true
+schema: "http://49.234.219.90:3000/graphql"
+generates:
+  src/store/gql/types.ts:
+    plugins:
+      - "typescript"
