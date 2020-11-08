@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>易雄宇 10:04:51</p>
+<p>易雄宇 10:04:51</p>
+<h1 id="codegen-">Codegen使用说明</h1>
+<h2 id="codegen-">Codegen简介</h2>
+<ul>
+<li>codegen全称graphql code generator,使用时通常通过@graphql-codegen/cli脚手架。</li>
+<li>codegen作用是将后台的schema转换成具体的,用ts描述的类型，使用codegen可以同步更新后端所使用到的对象类型。</li>
+<li>文档地址：<a href="https://graphql-code-generator.com/docs/getting-started/">https://graphql-code-generator.com/docs/getting-started/</a></li>
+</ul>
+<h2 id="getting-started">Getting Started</h2>
+<ol>
+<li><p>安装依赖</p>
+<ul>
+<li>首先确保安装了graphql:<code>cnpm i --save graphql</code></li>
+<li>接着安装脚手架CLI:<code>cnpm i --save-dev @graphql-codegen/cli</code></li>
+<li>最后安装一个之后用到的插件:<code>cnpm i --save @graphql-codegen/typescript</code></li>
+</ul>
+</li>
+<li><p>由于CLI不是全局安装，所以在package.json处添加script确保能运行:<code>&quot;init&quot;:&quot;graphql-codegen init&quot;</code></p>
+</li>
+<li><p>运行上面添加的指令，使用CLI进行codegen的配置初始化
+<code>npm run init</code>
+依次选择如下配置:</p>
+<ol>
+<li>application built with angular</li>
+<li>后端schema所在位置，eg:<a href="http://localhost:3000/graphql">http://localhost:3000/graphql</a></li>
+<li>用不到的配置，这里直接enter选默认，之后要在配置文件中删除这条</li>
+<li>选择插件，只选择一个:TypeScript (required by other typescript plugins)，但是这个配置会出现问题，之后需要删除。</li>
+<li>选择输出文件的目录和文件名，eg:src/app/api-gql/output.ts</li>
+<li>N</li>
+<li>配置文件的命名，选默认</li>
+<li>选择运行转换功能，输出ts文件的srcipt名称,eg:parsegql</li>
+</ol>
+</li>
+<li><p>删除package.json文件中，在init过程中生成的dev依赖 &quot;@graphql-codegen/typescript&quot;: &quot;0.0.x&quot;</p>
+</li>
+<li><p>删除codegen.yml配置文件中的 documents: &quot;src/<em>*/</em>.graphql&quot;</p>
+</li>
+<li><p>确保后端schema能正常访问，例如后端demo的schema地址是<a href="http://localhost:3000/graphql">http://localhost:3000/graphql</a>,之后运行脚本
+npm run parsegql,成功的话，可以在src/app/api-gql/output.ts中找到后端graphql schema对应的ts对象类型，使用时自行导入。</p>
+</li>
+</ol>
+
+</body>
+</html>

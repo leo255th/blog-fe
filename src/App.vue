@@ -21,5 +21,7 @@ export default {
   .content {
     margin: 20px 20px 0px 20px;
   }
+  .right
+  {margin-right:0;}
 }
 </style>

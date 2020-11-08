@@ -7,9 +7,21 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "ant-design-vue": "^1.7.1",
     "core-js": "^3.6.5",
+    "element-ui": "^2.13.2",
+    "hbl-comment": "^1.2.3",
+    "jquery": "^3.5.1",
+    "mavon-editor": "^2.9.0",
+    "moment": "^2.29.1",
+    "sass": "^1.28.0",
+    "sass-loader": "^10.0.5",
+    "stylus": "^0.54.8",
+    "stylus-loader": "^3.0.2",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
+    "vue-meditor": "^2.1.1",
+    "vue-meditors": "^1.4.6",
     "vue-property-decorator": "^8.4.2",
     "vue-router": "^3.2.0",
     "vuex": "^3.4.0"
@@ -22,6 +34,7 @@
     "@vue/cli-service": "~4.5.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
+    "stylus": "^0.54.8",
     "typescript": "~3.9.3",
     "vue-template-compiler": "^2.6.11"
   },

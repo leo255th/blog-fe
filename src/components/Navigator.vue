@@ -35,12 +35,12 @@ export default {
       leftItems: [
         { index: "0", label: "首页", to: "/" },
         { index: "1", label: "文章管理", to: "/edit" },
-        { index: "2", label: "文章列表", to: "/" },
-        { index: "3", label: "新文章", to: "/" },
+        { index: "2", label: "文章列表", to: "/editlist" },
+        { index: "3", label: "新文章", to: "/newedit" },
       ],
       rightItems: [
-        { index: "0", label: "注册", to: "/" },
-        { index: "1", label: "登陆", to: "/" },
+        { index: "0", label: "注册", to: "/register" },
+        { index: "1", label: "登陆", to: "/login" },
       ],
     };
   },

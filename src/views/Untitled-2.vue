@@ -62,7 +62,6 @@ export default {
   color: #a2c71c; 
   // text-align: left;
   padding:3px 0px 0px 20px;
-  background: #2f6b58a1;
   
 }
 .tit a{
@@ -85,7 +84,7 @@ export default {
     padding: 0 10px 30px 20px ;
      border-width:1px;
   border-style:solid ;
-  border-color:   white white #40ffff white;	
+  border-color:   white white  black white;	
 }
 .title{
    line-height: 30px;
@@ -96,7 +95,7 @@ export default {
     	transform: translateY(-2px);
   }
   .title a{
-        color:cadetblue;
+        color:black;
   }
   .look{
   font-size:10px;  
