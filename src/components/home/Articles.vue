@@ -1,7 +1,7 @@
 <template>
   <div class="articles">
     {{ article }}
-    <button @click="test()">测试graphql</button>
+    <button @click="login(loginRes)">测试登陆</button>
   </div>
 </template>
 <script>
@@ -11,11 +11,15 @@ export default {
   data() {
     return {
       article: "这里是近期文章列表",
+      loginRes:{
+        userName:'用户1号',
+        pwd:'abc123'
+      }
     };
   },
   methods:{
     ...mapActions('user',{
-      test:'sendGraphql'
+      login:'login'
     })
   }
 };

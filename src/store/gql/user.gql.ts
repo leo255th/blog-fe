@@ -13,3 +13,16 @@ mutation($byUserName:ByUserNameInput){
   }
 }
 `
+export const USER_LOGIN=gql`
+mutation($byPwd: ByPwdInput){
+  login(byPwd:$byPwd){
+    res{
+      done,
+      errMsg
+    }
+    user{
+      userId
+    }
+  }
+}
+`
