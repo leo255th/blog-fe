@@ -9,6 +9,7 @@ mutation($byUserName:ByUserNameInput){
     }
     user{
       userId
+      userName
     }
   }
 }
@@ -22,7 +23,16 @@ mutation($byPwd: ByPwdInput){
     }
     user{
       userId
+      userName
     }
+  }
+}
+`
+export const USER_INFO_GET=gql`
+query($userId:Int!){
+  user(userId:$userId){
+    userId,
+    userName
   }
 }
 `

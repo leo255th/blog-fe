@@ -24,6 +24,8 @@ export type User = {
   __typename?: 'User';
   /** 用户ID */
   userId: Scalars['Int'];
+  /** 测试属性 */
+  userName?: Maybe<Scalars['String']>;
 };
 
 export type LoginRes = {

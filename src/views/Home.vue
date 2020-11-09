@@ -28,15 +28,18 @@
 import Articles from "../components/home/Articles";
 import Comments from "../components/home/Comments";
 import CardKeywords from "../components/home/CardKeywords";
-import CardDate from'../components/home/CardDate';
+import CardDate from "../components/home/CardDate";
 export default {
   name: "home",
   components: {
     Articles,
     Comments,
     CardKeywords,
-    CardDate
+    CardDate,
   },
+  created: function(){
+    console.log(this.$route.params)
+  }
 };
 </script>
 
