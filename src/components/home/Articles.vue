@@ -1,18 +1,16 @@
 <template>
   <div class="articles">
     {{ article }}
-    <button @click="login(loginRes)">测试登陆</button>
+    <button @click="test()">测试登陆</button>
+
+    <el-button :plain="true" @click="open">打开消息提示</el-button>
   </div>
 </template>
-<script lang='ts'>
+<script>
+import storage from "store2";
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import { ArticleList, ByPwdInput } from "../../store/gql/types";
 
-// 用TS类型约束组件参数类型
-type dataType = {
-  article: string;
-  loginInput: ByPwdInput;
-};
 export default {
   name: "articles-home",
   data() {
@@ -22,12 +20,22 @@ export default {
         userName: "用户1号",
         pwd: "abc123",
       },
-    } as dataType;
+    };
   },
   methods: {
     ...mapActions("user", {
       login: "login",
     }),
+    test() {
+      var vm = this;
+      this.login(this.loginInput).then(() => {
+        console.log("你好1");
+        vm.$message("你好");
+      });
+    },
+    open() {
+        this.$message('这是一条消息提示');
+      },
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
-  <div class="nav">
-    <div class="left-nav">
+  <el-row class="nav" :gutter="24" type="flex" justify="space-around">
+    <el-col class="left-nav" :span="20">
       <router-link
         class="nav-item"
         v-for="item in leftItems"
@@ -9,11 +9,8 @@
       >
         {{ item.label }}
       </router-link>
-      <!-- <div class="nav-item" v-for="item in leftItems" :key="item.index">
-        <router-link :to="item.to">{{ item.label }}</router-link>
-      </div> -->
-    </div>
-    <div class="right-nav">
+    </el-col>
+    <el-col class="right-nav" :span="4">
       <router-link
         class="nav-item"
         v-for="item in rightItems"
@@ -22,8 +19,8 @@
       >
         {{ item.label }}
       </router-link>
-    </div>
-  </div>
+    </el-col>
+  </el-row>
 </template>
 
 <script>
@@ -48,15 +45,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
-div.nav {
-  background: white;
+.nav {
+  background: #545c64;
   width: 100%;
   height: 80px;
-  display: flex;
-  color: black;
-  flex-direction: row;
-  justify-content: space-between;
-
+  margin-left: 0;
+  margin-right: 0;
   .left-nav,
   .right-nav {
     display: flex;
@@ -65,19 +59,22 @@ div.nav {
     .nav-item {
       text-align: center;
       line-height: 80px;
-      width: 150px;
+      width: 100px;
       height: 80px;
       cursor: pointer;
       text-decoration: none;
-      color: black;
+      color: #fff;
       &:hover {
-        background: black;
+        background: #434a50;
         // text-decoration: none;
-        color: white;
+        color: #ffd04b;
       }
       &:focus {
         outline: none;
       }
+    }
+    .nav-item.selected{
+      
     }
   }
 }

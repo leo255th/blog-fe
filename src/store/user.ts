@@ -46,7 +46,8 @@ export default {
         mutation: USER_LOGIN,
         variables: {
           byPwd: input
-        }
+        },
+        fetchPolicy:'no-cache'
       });
       commit('refreshLoginState', res.data?.login);
     }
