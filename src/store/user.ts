@@ -1,9 +1,7 @@
 import { myClient } from './gql/graphql.client'
 import { USER_INFO_GET, USER_LOGIN, USER_REGISTER } from './gql/user.gql';
 import storage from 'store2'
-import { Store, Commit } from 'vuex'
 import { ByPwdInput, ByUserNameInput, LoginRes, Mutation, Query, RegisterRes } from './gql/types';
-import { register } from 'ts-node';
 
 export default {
   namespaced: true,
@@ -35,15 +33,28 @@ export default {
         state.isEmpty = false;
         const userId = storage.get('userId');
         const userName = storage.get('userName');
+        console.log('jwt存在，获取到的用户名密码分别是:')
+        console.log('userId',userId);
+        console.log('userName',userName);
         state.myUserInfo.userId = userId;
         state.myUserInfo.userName = userName;
-        if (userId != payload.userInfo.userId) {
-          // 如果本地userId和url里带有的userId不同，那么是进入了其他人的首页
-          state.isMyHome = false;
-          state.otherUserInfo = { ...payload.userInfo }
-        } else {
+        if(payload.userInfo){
+          // 如果url带有userId,请求到了用户信息
+          if (userId != payload.userInfo.userId) {
+            // 如果本地userId和url里带有的userId不同，那么是进入了其他人的首页
+            state.isMyHome = false;
+            state.otherUserInfo = { ...payload.userInfo }
+          } else {
+            state.isMyHome = true;
+            state.myUserInfo = { ...payload.userInfo };
+          }
+        }else{
+          // url没带有userId
           state.isMyHome = true;
-          state.myUserInfo = { ...payload.userInfo };
+          state.myUserInfo = {
+            userId,
+            userName
+          }
         }
       } else { // 没有登录
         state.isLogin = false;

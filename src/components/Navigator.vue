@@ -7,35 +7,50 @@
     justify="space-around"
     style="margin-left: 0px"
   >
-    <el-col class="left-nav" :span="17">
+    <el-col class="left-nav" :span="15">
       <router-link
         class="nav-item"
         key="0"
-        :to="'/' + otherUserInfo.userId"
-        v-if="!isMyHome&!isEmpty"
+        :to="'/user/' + otherUserInfo.userId"
+        v-if="!isMyHome & !isEmpty"
         >{{ otherUserInfo.userName + "的首页" }}</router-link
       >
-      <router-link class="nav-item" key="1" to="/" v-if="isMyHome&!isEmpty"
+      <router-link
+        class="nav-item"
+        key="1"
+        :to="'/user/' + myUserInfo.userId"
+        v-if="isMyHome & !isEmpty"
         >我的首页</router-link
       >
-      <router-link class="nav-item" key="2" to="/edit" v-if="isMyHome&!isEmpty"
+      <router-link
+        class="nav-item"
+        key="2"
+        to="/edit"
+        v-if="isMyHome & !isEmpty"
         >文章管理</router-link
       >
-      <router-link class="nav-item" key="3" to="/" v-if="!isEmpty">文章列表</router-link>
-      <router-link class="nav-item" key="4" to="/" v-if="isMyHome&!isEmpty"
+      <router-link class="nav-item" key="3" to="/" v-if="!isEmpty"
+        >文章列表</router-link
+      >
+      <router-link
+        class="nav-item"
+        key="4"
+        to="/edit"
+        v-if="isMyHome & !isEmpty"
         >新文章</router-link
       >
     </el-col>
-    <el-col class="right-nav" :span="7">
+    <el-col class="right-nav" :span="9">
       <router-link class="nav-item" key="10" to="/login" v-if="!isLogin"
         >登陆</router-link
       >
       <router-link class="nav-item" key="11" to="/register" v-if="!isLogin"
         >注册</router-link
       >
-      <el-dropdown v-if="isLogin" @command="handleCommand">
+      <el-dropdown class="nav-item" v-if="isLogin" @command="handleCommand">
         <span class="el-dropdown-link">
-          {{ myUserInfo.userName }}<i class="el-icon-arrow-down el-icon--right"></i>
+          {{ myUserInfo.userName
+          }}<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="toUserinfo">个人信息</el-dropdown-item>
@@ -58,13 +73,13 @@ export default {
     ...mapState("user", {
       isLogin: (state) => state.isLogin,
       isMyHome: (state) => state.isMyHome,
-      isEmpty:(state)=>state.isEmpty,
+      isEmpty: (state) => state.isEmpty,
       myUserInfo: (state) => state.myUserInfo,
       otherUserInfo: (state) => state.otherUserInfo,
     }),
   },
-  created(){
-    console.log('导航组件创建完成,isEmpty:',this.isEmpty)
+  created() {
+    console.log("导航组件创建完成,isEmpty:", this.isEmpty);
   },
   methods: {
     handleCommand(command) {
@@ -112,7 +127,10 @@ export default {
       &:hover {
         background: #434a50;
         // text-decoration: none;
-        color: #ffd04b;
+        color: #409eff;
+        // span {
+        //   color: #409eff;
+        // }
       }
       &:focus {
         outline: none;

@@ -67,6 +67,14 @@ export type ArticleEntity = {
 };
 
 
+export type FieldEntity = {
+  __typename?: 'FieldEntity';
+  /** id */
+  id: Scalars['Int'];
+  /** 领域 */
+  field: Scalars['String'];
+};
+
 export type Article = {
   __typename?: 'Article';
   /** 文章ID */
@@ -160,6 +168,7 @@ export type Query = {
   __typename?: 'Query';
   user: User;
   article: Article;
+  fields: Array<FieldEntity>;
   /** 文章列表 */
   articles?: Maybe<ArticleList>;
   comment: Comment;
