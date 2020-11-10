@@ -1,14 +1,18 @@
 import { myClient } from './gql/graphql.client'
 import { USER_INFO_GET, USER_LOGIN, USER_REGISTER } from './gql/user.gql';
-import localStore from 'store2'
+import storage from 'store2'
 import { Store, Commit } from 'vuex'
-import { ByPwdInput, LoginRes, Mutation, Query } from './gql/types';
+import { ByPwdInput, ByUserNameInput, LoginRes, Mutation, Query, RegisterRes } from './gql/types';
+import { register } from 'ts-node';
 
 export default {
   namespaced: true,
   state: {
     isLogin: false,
     isMyHome: false,
+    // url不带有userId，本地storage里也没有信息，无法填充下面两个userInfo
+    // isEmpty=true时，根组件需要重定向至login界面
+    isEmpty: true,
     myUserInfo: {
       userId: null,
       userName: ''
@@ -19,53 +23,97 @@ export default {
     },
   },
   mutations: {
+    // 从url进入网页，或者刷新网页时，调用这个方法
     // 检测本地localstorage信息与刚去服务器查询的userInfo信息
-    initUserInfo(state: any, userInfo: any) {
-      const jwt = localStore.get('jwt');
+    initUserInfo(state: any, payload:{
+      userInfo?: any,
+      hasUserId?: boolean
+    }) {
+      const jwt = storage.get('jwt');
       if (jwt) { // 如果有jwt，那么认为用户已登录
         state.isLogin = true;
-        const userId = localStore.get('userId');
-        const userName = localStore.get('userName');
+        state.isEmpty = false;
+        const userId = storage.get('userId');
+        const userName = storage.get('userName');
         state.myUserInfo.userId = userId;
         state.myUserInfo.userName = userName;
-        if (userId != userInfo.userId) {
+        if (userId != payload.userInfo.userId) {
           // 如果本地userId和url里带有的userId不同，那么是进入了其他人的首页
           state.isMyHome = false;
-          state.otherUserInfo = { ...userInfo }
+          state.otherUserInfo = { ...payload.userInfo }
         } else {
           state.isMyHome = true;
-          state.myUserInfo = { ...userInfo };
+          state.myUserInfo = { ...payload.userInfo };
         }
       } else { // 没有登录
-        state.isLogin=false;
+        state.isLogin = false;
         state.isMyHome = false;
-        state.otherUserInfo = { ...userInfo }
+        if (!payload.hasUserId) {
+          // 既没有登录，url又不带userId
+          state.isEmpty = true;
+        } else {
+          // 没有登录，但是url带有userId
+          state.isEmpty = false;
+          state.otherUserInfo = { ...payload.userInfo }
+        }
       }
     },
+    // 登陆与注册后调用这个方法更改登陆状态
     refreshLoginState(state: any, loginRes: LoginRes) {
       console.log('登陆结果', loginRes);
       if (loginRes && loginRes.res && loginRes.res.done == true) {
+        // 如果登陆成功
         state.isLogin = true;
-        if(state.otherUserInfo.userId&&state.otherUserInfo.userId==loginRes.user?.userId){
-          state.isMyHome=true
-        }else{
-          state.isMyHome=false;
+        state.isEmpty = false;
+        if (state.otherUserInfo.userId) {
+          // 如果进入过其他人的页面
+          if (state.otherUserInfo.userId == loginRes.user?.userId) {
+            // 如果那个页面是自己的页面，跳转到自己的页面
+            state.isMyHome = true;
+          } else {
+            // 如果那个页面不是自己的页面，跳转到其他人的页面
+            state.isMyHome = false;
+          }
+        } else {
+          // 跳转到自己的页面
+          state.isMyHome = true;
         }
         state.myUserInfo.userId = loginRes.user?.userId;
         state.myUserInfo.userName = loginRes.user?.userName;
-        localStore.set('userId', state.myUserInfo.userId);
-        localStore.set('userName', state.myUserInfo.userName);
-        localStore.set('jwt', 'abcd')
+        storage.set('userId', state.myUserInfo.userId);
+        storage.set('userName', state.myUserInfo.userName);
+        storage.set('jwt', 'abcd')
+        return
+      }
+    },
+    refreshRegisterState(state: any, registerRes: RegisterRes) {
+      console.log('注册结果', registerRes);
+      if (registerRes && registerRes.res && registerRes.res.done == true) {
+        // 如果注册成功
+        state.isLogin = true;
+        state.isEmpty = false;
+        if (state.otherUserInfo.userId) {
+          // 如果之前已经进入过其他人的页面，注册完成后跳转到其他人的页面
+          state.isMyHome = false;
+        } else {
+          // 如果没有，那么注册完成后会进入自己的页面
+          state.isMyHome = true;
+        }
+        state.myUserInfo.userId = registerRes.user?.userId;
+        state.myUserInfo.userName = registerRes.user?.userName;
+        storage.set('userId', state.myUserInfo.userId);
+        storage.set('userName', state.myUserInfo.userName);
+        storage.set('jwt', 'abcd')
         return
       }
     },
     logout(state: any) {
       state.isLogin = false;
-      state.isMyHome=false;
-      state.otherUserInfo={...state.myUserInfo};
-      localStore.remove('userId');
-      localStore.remove('userName');
-      localStore.remove('jwt');
+      state.isMyHome = false;
+      state.otherUserInfo = { ...state.myUserInfo };
+      storage.remove('userId');
+      storage.remove('userName');
+      storage.remove('jwt');
     }
   },
   actions: {
@@ -82,19 +130,58 @@ export default {
       return res;
     },
 
-    // 初始化导航栏需要的用户信息
-    async initNavUserInfo({ commit }: any, userId: number) {
-      const res=await myClient.query<Query>({
-        query:USER_INFO_GET,
-        variables:{
-          userId
-        },
-        fetchPolicy:'no-cache'
-      })
-      const userInfo = res.data.user
-      commit('initUserInfo', userInfo)
-      return userInfo;
-    }
+    // 初始化导航栏，通过url进入页面时调用
+    // 两种情况，Url带有userId,url没带有userId
+    async initNavInfo({ commit }: any, payload:{hasUserId?: boolean, userId?: number}) {
+      console.log('payload-userId:',payload.userId)
+      console.log('payload-hasUserId:',payload.hasUserId)
+      if (payload.hasUserId) {
+        // 如果url带有userId，查询对应用户信息
+        const res = await myClient.query<Query>({
+          query: USER_INFO_GET,
+          variables: {
+            userId:payload.userId
+          },
+          fetchPolicy: 'no-cache'
+        })
+        const userInfo = res.data.user
+        commit('initUserInfo', {userInfo,hasUserId:true})
+        return userInfo;
+      } else {
+        // 如果不带有userId
+        commit('initUserInfo', {hasUserId:false})
+        if(storage.get('jwt')){
+          return true;
+        }else{
+          return false;
+        }
+      }
+    },
+    // // 初始化导航栏需要的用户信息
+    // async initNavUserInfo({ commit }: any, userId: number) {
+    //   const res = await myClient.query<Query>({
+    //     query: USER_INFO_GET,
+    //     variables: {
+    //       userId
+    //     },
+    //     fetchPolicy: 'no-cache'
+    //   })
+    //   const userInfo = res.data.user
+    //   commit('initUserInfo', userInfo)
+    //   return userInfo;
+    // },
 
+    // 注册
+    async register({ commit }: any, input: ByUserNameInput) {
+      const res = await myClient.mutate<Mutation>({
+        mutation: USER_REGISTER,
+        variables: {
+          byUserName: input
+        },
+        fetchPolicy: 'no-cache'
+      })
+      commit('refreshLoginState', res.data?.register);
+      return res;
+    }
   }
 }

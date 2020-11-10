@@ -12,17 +12,17 @@
         class="nav-item"
         key="0"
         :to="'/' + otherUserInfo.userId"
-        v-if="!isMyHome"
+        v-if="!isMyHome&!isEmpty"
         >{{ otherUserInfo.userName + "的首页" }}</router-link
       >
-      <router-link class="nav-item" key="1" to="/" v-if="isMyHome"
+      <router-link class="nav-item" key="1" to="/" v-if="isMyHome&!isEmpty"
         >我的首页</router-link
       >
-      <router-link class="nav-item" key="2" to="/edit" v-if="isMyHome"
+      <router-link class="nav-item" key="2" to="/edit" v-if="isMyHome&!isEmpty"
         >文章管理</router-link
       >
-      <router-link class="nav-item" key="3" to="/">文章列表</router-link>
-      <router-link class="nav-item" key="4" to="/" v-if="isMyHome"
+      <router-link class="nav-item" key="3" to="/" v-if="!isEmpty">文章列表</router-link>
+      <router-link class="nav-item" key="4" to="/" v-if="isMyHome&!isEmpty"
         >新文章</router-link
       >
     </el-col>
@@ -58,9 +58,13 @@ export default {
     ...mapState("user", {
       isLogin: (state) => state.isLogin,
       isMyHome: (state) => state.isMyHome,
+      isEmpty:(state)=>state.isEmpty,
       myUserInfo: (state) => state.myUserInfo,
       otherUserInfo: (state) => state.otherUserInfo,
     }),
+  },
+  created(){
+    console.log('导航组件创建完成,isEmpty:',this.isEmpty)
   },
   methods: {
     handleCommand(command) {

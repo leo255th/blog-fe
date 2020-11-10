@@ -1,4 +1,4 @@
-<template>
+s<template>
   <div id="app">
     <el-container>
       <el-header>
@@ -26,21 +26,33 @@ export default {
     MyFooter,
   },
   created: function () {
+    // 通过url或者刷新页面进入网站后，会且仅会调用一次这个钩子函数
+    // 此时检测storage里的数据与url里的参数，初始化nav栏状态
     console.log(this.$route);
     if (this.$route.params.userId) {
       console.log("检测到url中带有userId，准备初始化用户信息");
-      this.initNavUserInfo(+this.$route.params.userId).then(res=>{
-        console.log('查询到的用户信息是:',res)
+      this.initNavInfo({
+        hasUserId: true,
+        userId: +this.$route.params.userId,
+      }).then((res) => {
+        console.log("查询到的用户信息是:", res);
+      });
+    } else {
+      this.initNavInfo({ hasUserId: false }).then((res) => {
+        if (!res) {
+          // 如果storage没有信息
+          if (this.$route.path !== "/login") this.$router.push("/login");
+        } else {
+          // 如果storage有信息
+          // do nothing
+        }
       });
     }
     console.log("根组件生成完毕");
   },
   methods: {
-    // ...mapMutations('user',{
-    //   initUserInfo:'initUserInfo'
-    // }),
     ...mapActions("user", {
-      initNavUserInfo: "initNavUserInfo",
+      initNavInfo: "initNavInfo",
     }),
   },
 };
