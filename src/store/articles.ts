@@ -1,6 +1,6 @@
-import { ADD_ARTICLE, GET_FIELDS } from './gql/articles.gql'
+import { ADD_ARTICLE, GET_ARTICLES, GET_FIELDS } from './gql/articles.gql'
 import { myClient } from './gql/graphql.client'
-import { AddArticleInput, AddArticleRes, FieldEntity, Mutation, Query } from './gql/types'
+import { AddArticleInput, AddArticleRes, ArticleList, ArticlesFilterInput, FieldEntity, Mutation, Query } from './gql/types'
 
 export default {
   namespaced: true,
@@ -41,5 +41,21 @@ export default {
         return false;
       }
     },
+    
+    // 查询文章列表
+    async getArticles({commit}:any,input:ArticlesFilterInput):Promise<ArticleList|boolean>{
+      const res=await myClient.query<Query>({
+        query:GET_ARTICLES,
+        variables:{
+          input
+        },
+        fetchPolicy:"no-cache"
+      })
+      if(res.data){
+        return res.data?.articles
+      }else{
+        return false;
+      }
+    }
   }
 }

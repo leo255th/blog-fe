@@ -27,3 +27,18 @@ mutation($input:AddArticleInput!){
   }
 }
 `
+export const GET_ARTICLES=gql`
+query($input:ArticlesFilterInput!){
+  articles(input:$input){
+    list{
+      id
+      userId
+      title
+      description
+      field
+      tags
+    }
+    total
+  }
+}
+`

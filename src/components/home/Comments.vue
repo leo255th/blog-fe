@@ -17,6 +17,6 @@ export default {
 .comments {
   background: white;
   height: 1000px;
-  width: 1000px;
+  width: 100%;
 }
 </style>

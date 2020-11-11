@@ -45,16 +45,27 @@ export default {
 
 <style lang="less" scoped>
 .home {
+  // 外部容器撑开空间，分左右两个部分
+  width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around; 
   .container {
+    // 左右两个容器内部都是垂直向下排列
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     div {
       margin: 10px;
     }
+  }
+  .left{
+    // 左容器的宽度
+    width: 80%;
+  }
+  .right{
+    // 右容器的宽度
+    width: 20%;
   }
 }
 </style>

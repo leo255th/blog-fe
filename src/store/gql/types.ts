@@ -66,6 +66,8 @@ export type ArticleEntity = {
   updatedAt: Scalars['DateTime'];
   /** 是否删除 */
   isDeleted: Scalars['Boolean'];
+  /** 文章的标签 */
+  tags: Array<Scalars['String']>;
 };
 
 
@@ -172,7 +174,7 @@ export type Query = {
   article: Article;
   fields: Array<FieldEntity>;
   /** 文章列表 */
-  articles?: Maybe<ArticleList>;
+  articles: ArticleList;
   comment: Comment;
   comments: CommentList;
 };
