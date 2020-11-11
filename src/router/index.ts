@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Edit from '../views/Edit.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
+import ArticleDetail from '../views/ArticleDetail.vue'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -15,6 +16,11 @@ const routes: Array<RouteConfig> = [
     path: '/user/:userId',
     name: 'Home',
     component: Home
+  },
+  {
+    path:'/article/:articleId',
+    name:'Article',
+    component:ArticleDetail
   },
   {
     path: '/edit',

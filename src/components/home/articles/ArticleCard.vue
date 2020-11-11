@@ -4,7 +4,7 @@
       <!-- header部分 -->
       <div class="header">
         <div class="iconfont icon-wenzhang"></div>
-        <el-button class="btn" type="text">查看详情</el-button>
+        <el-button class="btn" type="text" @click="toDetail">查看详情</el-button>
       </div>
       <!--body部分放标题，简介，领域，标签-->
       <div class="body">
@@ -61,7 +61,11 @@ export default {
       return cutString(this.article.tags.toString(),100 );
     },
   },
-  methods: {},
+  methods: {
+    toDetail(){
+      this.$router.push('/article/'+this.article.id)
+    }
+  },
 };
 </script>
 

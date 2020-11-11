@@ -6,7 +6,7 @@
         type="textarea"
         :rows="2"
         placeholder="请输入评论内容"
-        v-model="comment2User"
+        v-model="comment2Article"
       >
       </el-input>
       <el-button class="btn" type="info" plain @click="sendComment"
@@ -24,11 +24,11 @@ import { mapActions, mapState } from "vuex";
 import CommentCard from "./comments/CommentCard";
 
 export default {
-  name: "comments-home",
+  name: "comments-article",
   data() {
     return {
       comments: [],
-      comment2User: "",
+      comment2Article: "",
     };
   },
   computed: {
@@ -45,8 +45,8 @@ export default {
   },
   methods: {
     getComments() {
-      const userId = +this.$route.params.userId;
-      this.getComments2User(userId).then((res) => {
+      const articleId=+this.$route.params.articleId;
+      this.getComments2Article(articleId).then((res) => {
         if (res) {
           console.log("获取评论成功:");
           console.log(res);
@@ -55,23 +55,23 @@ export default {
       });
     },
     ...mapActions("comment", {
-      getComments2User: "getComments2User",
-      sendComment2User: "sendComment2User",
+      getComments2Article: "getComments2Article",
+      sendComment2Article: "sendComment2Article",
     }),
     sendComment() {
       const vm = this;
       const input = {
         userId: this.myUserInfo.userId,
         userName: this.myUserInfo.userName,
-        commentedUserId: +vm.$route.params.userId,
-        content: this.comment2User,
+        commentedArticleId: +vm.$route.params.articleId,
+        content: this.comment2Article,
       };
-      this.sendComment2User(input).then((res) => {
+      this.sendComment2Article(input).then((res) => {
         if (res) {
           console.log("发送评论成功");
           this.getComments(); // 发送评论成功后，刷新评论区
           this.$message.success("评论发送成功！");
-          this.comment2User = "";
+          this.comment2Article = "";
         }
       });
     },
