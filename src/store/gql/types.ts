@@ -52,6 +52,8 @@ export type ArticleEntity = {
   userId: Scalars['Int'];
   /** 文章的标题 */
   title: Scalars['String'];
+  /** 文章的描述 */
+  description: Scalars['String'];
   /** 文章的内容（富文本） */
   content: Scalars['String'];
   /** 文章的领域 */
@@ -310,6 +312,8 @@ export type AddArticleInput = {
   userId: Scalars['Int'];
   /** 文章的标题 */
   title: Scalars['String'];
+  /** 文章的描述 */
+  description: Scalars['String'];
   /** 文章的内容（富文本） */
   content: Scalars['String'];
   /** 文章的领域 */

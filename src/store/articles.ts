@@ -1,6 +1,6 @@
-import { GET_FIELDS } from './gql/articles.gql'
+import { ADD_ARTICLE, GET_FIELDS } from './gql/articles.gql'
 import { myClient } from './gql/graphql.client'
-import { FieldEntity, Query } from './gql/types'
+import { AddArticleInput, AddArticleRes, FieldEntity, Mutation, Query } from './gql/types'
 
 export default {
   namespaced: true,
@@ -23,6 +23,23 @@ export default {
       })
       commit('setFields', res.data.fields)
       return res.data.fields;
-    }
+    },
+
+    // 创建文章
+    // 暂时只需要获取结果，不需要更新store
+    async addArticle({commit}:any,input:AddArticleInput) :Promise<AddArticleRes|boolean>{
+      const res=await myClient.mutate<Mutation>({
+        mutation:ADD_ARTICLE,
+        variables:{
+          input
+        },
+        fetchPolicy:'no-cache'
+      })
+      if(res.data){
+        return res.data?.addArticle
+      }else{
+        return false;
+      }
+    },
   }
 }

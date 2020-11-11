@@ -8,3 +8,22 @@ query{
   }
 }
 `
+export const ADD_ARTICLE=gql`
+mutation($input:AddArticleInput!){
+  addArticle(input:$input){
+    res{
+      done
+      errMsg
+    }
+    article{
+      articleId
+      data{
+        id
+        userId
+        title
+        description
+      }
+    }
+  }
+}
+`

@@ -39,7 +39,7 @@
         <div class="input-row">
           <span class="label">关键词</span>
           <el-select
-          class="multi-select"
+            class="multi-select"
             v-model="tags"
             multiple
             filterable
@@ -94,19 +94,40 @@ export default {
     ...mapState("articles", {
       fields: (state) => state.fields,
     }),
+    ...mapState("user", {
+      myUserInfo: (state) => state.myUserInfo,
+    }),
   },
   components: {
     quillEditor,
   },
   methods: {
     onSubmit() {
-      console.log(this.content);
+      const input = {
+        userId: this.myUserInfo.userId,
+        title: this.title,
+        description: this.description,
+        content: this.content,
+        field: this.field,
+        tags: this.tags,
+      };
+      console.log("将发送给后端的input是", input);
+      this.addArticle(input).then((res) => {
+        if (res) {
+          this.$message.success("文章发布成功！");
+          // 这里加路由跳转逻辑
+          console.log(res);
+        } else {
+          this.$message.error("服务器错误，文章发布失败！");
+        }
+      });
     },
     handleClick(tab, event) {
       console.log(tab, event);
     },
     ...mapActions("articles", {
       getFields: "getFields",
+      addArticle: "addArticle",
     }),
   },
 };
@@ -162,7 +183,7 @@ div.article-eidt {
       .textarea {
         width: 510px;
       }
-      .multi-select{
+      .multi-select {
         width: 510px;
       }
     }
