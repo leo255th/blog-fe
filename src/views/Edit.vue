@@ -59,7 +59,7 @@
         <!-- <p class="preview" v-html="content"></p> -->
         <!-- <div class="ql-container ql-snow">   -->
         <!-- 这是一个线框容器 -->
-        <div class="ql-editor">
+        <div class="ql-editor-preview">
           <div v-html="content"></div>
         </div>
         <!-- </div> -->
@@ -195,7 +195,7 @@ div.article-eidt {
       width: 100px;
       margin-top: 100px;
     }
-    .preview {
+    .ql-editor-preview {
       display: inline-block;
       height: 600px;
       width: 80%;
