@@ -1,6 +1,6 @@
-import { ADD_ARTICLE, GET_ARTICLES, GET_FIELDS } from './gql/articles.gql'
+import { ADD_ARTICLE, GET_ARTICLE, GET_ARTICLES, GET_FIELDS } from './gql/articles.gql'
 import { myClient } from './gql/graphql.client'
-import { AddArticleInput, AddArticleRes, ArticleList, ArticlesFilterInput, FieldEntity, Mutation, Query } from './gql/types'
+import { AddArticleInput, AddArticleRes, ArticleEntity, ArticleList, ArticlesFilterInput, FieldEntity, Mutation, Query } from './gql/types'
 
 export default {
   namespaced: true,
@@ -56,6 +56,22 @@ export default {
       }else{
         return false;
       }
-    }
+    },
+    
+    // 获取文章详情
+    async getArticleDetail({commit}:any,articleId:number):Promise<ArticleEntity|boolean>{
+      const res=await myClient.query<Query>({
+        query:GET_ARTICLE,
+        variables:{
+          articleId
+        },
+        fetchPolicy:'no-cache'
+      })
+      if(res.data){
+        return res.data?.article.data
+      }else{
+        return false;
+      }
+    },
   }
 }

@@ -11,6 +11,13 @@
       "font_class": "wenzhang",
       "unicode": "e668",
       "unicode_decimal": 58984
+    },
+    {
+      "icon_id": "4866684",
+      "name": "用户",
+      "font_class": "yonghu",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
     }
   ]
 }

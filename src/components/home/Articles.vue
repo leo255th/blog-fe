@@ -55,7 +55,7 @@ export default {
   align-items: flex-start;
   align-content: flex-start;
   .card {
-    width: 48%; // 控制卡片的宽度
+    width: 45%; // 控制卡片的宽度
     // height: 300px; // 控制卡片的大小
     margin: 10px;
   }

@@ -42,3 +42,20 @@ query($input:ArticlesFilterInput!){
   }
 }
 `
+export const GET_ARTICLE=gql`
+query($articleId:Int!){
+  article(articleId:$articleId){
+    articleId
+    data{
+      id
+      userId
+      title
+      description
+      content
+      field
+      createdAt
+      tags
+    }
+  }
+}
+`

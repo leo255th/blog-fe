@@ -58,7 +58,7 @@ export default {
       return cutString(this.article.description, 1000);
     },
     tags: function () {
-      return cutString(this.article.tags.toString(), 100);
+      return cutString(this.article.tags.toString(),100 );
     },
   },
   methods: {},
@@ -123,12 +123,12 @@ div.container {
         width: 100%;
         color: #606266;
         .label {
-          width: 10%;
+          width: 12%;
           height: 30px;
           // border: 1px solid black;
         }
         .label.tags {
-          width: 13%;
+          width: 16%;
         }
         .title {
           width: 80%;
