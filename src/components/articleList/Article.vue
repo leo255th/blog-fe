@@ -149,12 +149,12 @@ div.container {
         width: 100%;
         color: #606266;
         .label {
-          width: 12%;
+          width: 7%;
           height: 30px;
           // border: 1px solid black;
         }
         .label.tags {
-          width: 16%;
+          width: 8%;
         }
         .title {
           width: 80%;
@@ -165,7 +165,7 @@ div.container {
           // border: 1px solid black;
         }
         .field {
-          width: 20%;
+          width: 10%;
           // border: 1px solid black;
         }
         .tags {
