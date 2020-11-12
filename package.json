@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve --port 8088",
     "build": "vue-cli-service build",
     "init": "graphql-codegen init",
-    "parsegql": "graphql-codegen --config codegen.yml"
+    "parsegql": "graphql-codegen --config codegen.yml",
+    "prod":"pm2 --name='blog-fe' start npm -- run serve "
   },
   "dependencies": {
     "@graphql-codegen/typescript": "^1.17.11",
