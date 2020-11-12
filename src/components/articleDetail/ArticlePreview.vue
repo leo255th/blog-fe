@@ -108,6 +108,7 @@ export default {
     .my-row {
       display: flex;
       flex-direction: row;
+      margin:5px 0px 0px 5px;
       width: 100%;
       .label {
         width: 7%;
