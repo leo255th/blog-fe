@@ -9,9 +9,9 @@
       </div>
     </div>
     <div class="container right">
-      <div>
+      <!-- <div>
         <card-keywords></card-keywords>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -49,11 +49,11 @@ export default {
   }
   .left{
     // 左容器的宽度
-    width: 80%;
+    width: 95%;
   }
   .right{
     // 右容器的宽度
-    width: 20%;
+    width: 5%;
   }
 }
 </style>

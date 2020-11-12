@@ -1,7 +1,7 @@
 import { myClient } from './gql/graphql.client'
-import { USER_INFO_GET, USER_LOGIN, USER_REGISTER } from './gql/user.gql';
+import { GET_USER_DATE_SET, GET_USER_FIELDS, USER_INFO_GET, USER_LOGIN, USER_REGISTER } from './gql/user.gql';
 import storage from 'store2'
-import { ByPwdInput, ByUserNameInput, LoginRes, Mutation, Query, RegisterRes } from './gql/types';
+import { ByPwdInput, ByUserNameInput, LoginRes, Mutation, Query, RegisterRes, FieldCount, DateCount } from './gql/types';
 
 export default {
   namespaced: true,
@@ -23,7 +23,7 @@ export default {
   mutations: {
     // 从url进入网页，或者刷新网页时，调用这个方法
     // 检测本地localstorage信息与刚去服务器查询的userInfo信息
-    initUserInfo(state: any, payload:{
+    initUserInfo(state: any, payload: {
       userInfo?: any,
       hasUserId?: boolean
     }) {
@@ -34,11 +34,11 @@ export default {
         const userId = storage.get('userId');
         const userName = storage.get('userName');
         console.log('jwt存在，获取到的用户名密码分别是:')
-        console.log('userId',userId);
-        console.log('userName',userName);
+        console.log('userId', userId);
+        console.log('userName', userName);
         state.myUserInfo.userId = userId;
         state.myUserInfo.userName = userName;
-        if(payload.userInfo){
+        if (payload.userInfo) {
           // 如果url带有userId,请求到了用户信息
           if (userId != payload.userInfo.userId) {
             // 如果本地userId和url里带有的userId不同，那么是进入了其他人的首页
@@ -48,7 +48,7 @@ export default {
             state.isMyHome = true;
             state.myUserInfo = { ...payload.userInfo };
           }
-        }else{
+        } else {
           // url没带有userId
           state.isMyHome = true;
           state.myUserInfo = {
@@ -143,27 +143,27 @@ export default {
 
     // 初始化导航栏，通过url进入页面时调用
     // 两种情况，Url带有userId,url没带有userId
-    async initNavInfo({ commit }: any, payload:{hasUserId?: boolean, userId?: number}) {
-      console.log('payload-userId:',payload.userId)
-      console.log('payload-hasUserId:',payload.hasUserId)
+    async initNavInfo({ commit }: any, payload: { hasUserId?: boolean, userId?: number }) {
+      console.log('payload-userId:', payload.userId)
+      console.log('payload-hasUserId:', payload.hasUserId)
       if (payload.hasUserId) {
         // 如果url带有userId，查询对应用户信息
         const res = await myClient.query<Query>({
           query: USER_INFO_GET,
           variables: {
-            userId:payload.userId
+            userId: payload.userId
           },
           fetchPolicy: 'no-cache'
         })
         const userInfo = res.data.user
-        commit('initUserInfo', {userInfo,hasUserId:true})
+        commit('initUserInfo', { userInfo, hasUserId: true })
         return userInfo;
       } else {
         // 如果不带有userId
-        commit('initUserInfo', {hasUserId:false})
-        if(storage.get('jwt')){
+        commit('initUserInfo', { hasUserId: false })
+        if (storage.get('jwt')) {
           return true;
-        }else{
+        } else {
           return false;
         }
       }
@@ -193,6 +193,41 @@ export default {
       })
       commit('refreshLoginState', res.data?.register);
       return res;
+    },
+    // 获取用户领域
+    async getUserFields({ commit }: any, userId: number): Promise<FieldCount[] | boolean | undefined | null> {
+      const res = await myClient.query<Query>({
+        query: GET_USER_FIELDS,
+        variables: {
+          userId
+        },
+        fetchPolicy: "no-cache"
+      })
+      if (res.data) {
+        if (res.data.user) {
+          return res.data.user.fields
+        }
+      } else {
+        return false;
+      }
+    },
+
+    // 获取用户文章时间归档
+    async getUsetTimeSet({ commit }: any, userId: number): Promise<DateCount[] | boolean | undefined | null> {
+      const res = await myClient.query<Query>({
+        query: GET_USER_DATE_SET,
+        variables: {
+          userId
+        },
+        fetchPolicy: "no-cache"
+      })
+      if (res.data) {
+        if (res.data.user) {
+          return res.data.user.dateSet;
+        }
+      } else {
+        return false;
+      }
     }
   }
 }

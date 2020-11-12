@@ -49,6 +49,7 @@ query($articleId:Int!){
     data{
       id
       userId
+      userName
       title
       description
       content

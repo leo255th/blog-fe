@@ -26,6 +26,10 @@ export type User = {
   userId: Scalars['Int'];
   /** 测试属性 */
   userName?: Maybe<Scalars['String']>;
+  /** 用户的关键字 */
+  fields?: Maybe<Array<FieldCount>>;
+  /** 用户的文章日期归档 */
+  dateSet?: Maybe<Array<DateCount>>;
 };
 
 export type LoginRes = {
@@ -42,6 +46,24 @@ export type RegisterRes = {
   res: Result;
   /** 注册成功后返回用户信息 */
   user?: Maybe<User>;
+};
+
+export type FieldCount = {
+  __typename?: 'FieldCount';
+  /** 领域名 */
+  field: Scalars['String'];
+  /** 对应数量 */
+  num: Scalars['Int'];
+};
+
+export type DateCount = {
+  __typename?: 'DateCount';
+  /** 年 */
+  year: Scalars['Int'];
+  /** 月 */
+  month: Scalars['Int'];
+  /** 对应数量 */
+  num: Scalars['Int'];
 };
 
 export type ArticleEntity = {
