@@ -44,18 +44,16 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.articles {
+.article-list {
   // background: white;
   // border: 2px solid black;
   width: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
-  align-content: flex-start;
+  align-items: center;
   .card {
-    width: 90%; // 控制卡片的宽度
+    width: 80%; // 控制卡片的宽度
     // height: 300px; // 控制卡片的大小
     margin: 10px;
   }

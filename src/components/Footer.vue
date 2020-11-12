@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- <div class="line"></div> -->
-    <span>底栏</span>
+    <span>个人博客，记录点滴</span>
   </div>
 </template>
 <script>

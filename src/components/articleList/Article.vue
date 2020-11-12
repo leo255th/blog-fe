@@ -4,12 +4,18 @@
       <!-- header部分 -->
       <div class="header">
         <div class="iconfont icon-wenzhang"></div>
-        <el-button class="btn" type="text" @click="toDetail"
-          >查看详情</el-button
-        >
-        <el-button class="btn" type="text" @click="toReEdit" v-if="isMyHome"
-          >编辑</el-button
-        >
+        <div class="btns">
+          <el-button class="btn detail" type="text" @click="toDetail"
+            >查看详情</el-button
+          >
+          <el-button
+            class="btn reedit"
+            type="text"
+            @click="toReEdit"
+            v-if="isMyHome"
+            >编辑</el-button
+          >
+        </div>
       </div>
       <!--body部分放标题，简介，领域，标签-->
       <div class="body">
