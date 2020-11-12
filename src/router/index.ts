@@ -6,6 +6,7 @@ import ReEdit from '../views/ReEdit.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import ArticleDetail from '../views/ArticleDetail.vue'
+import ArticleList from '../views/ArticleList.vue'
 Vue.use(VueRouter)
 
 const routes: Array<RouteConfig> = [
@@ -22,6 +23,11 @@ const routes: Array<RouteConfig> = [
     path:'/article/:articleId',
     name:'Article',
     component:ArticleDetail
+  },
+  {
+    path:'/list/:userId',
+    name:'ArticleList',
+    component:ArticleList
   },
   {
     path: '/edit',

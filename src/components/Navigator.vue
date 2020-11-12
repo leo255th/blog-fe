@@ -29,7 +29,10 @@
         v-if="isMyHome & !isEmpty"
         >文章管理</router-link
       > -->
-      <router-link class="nav-item" key="3" to="/" v-if="!isEmpty"
+      <router-link class="nav-item" key="3" :to="'/list/'+myUserInfo.userId" v-if="isMyHome &!isEmpty"
+        >文章列表</router-link
+      >
+        <router-link class="nav-item" key="3" :to="'/list/'+otherUserInfo.userId" v-if="!isMyHome&!isEmpty"
         >文章列表</router-link
       >
       <router-link
