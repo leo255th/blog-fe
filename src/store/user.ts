@@ -76,6 +76,7 @@ export default {
         // 如果登陆成功
         state.isLogin = true;
         state.isEmpty = false;
+        state.isMyHome = false;
         if (state.otherUserInfo.userId) {
           // 如果进入过其他人的页面
           if (state.otherUserInfo.userId == loginRes.user?.userId) {
@@ -101,6 +102,7 @@ export default {
       console.log('注册结果', registerRes);
       if (registerRes && registerRes.res && registerRes.res.done == true) {
         // 如果注册成功
+        state.isMyHome = false;
         state.isLogin = true;
         state.isEmpty = false;
         if (state.otherUserInfo.userId) {
