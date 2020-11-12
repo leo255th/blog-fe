@@ -90,6 +90,9 @@ export default {
           // 跳转到自己的页面
           state.isMyHome = true;
         }
+        console.log('isLogin:',state.isLogin)
+        console.log('isEmpty',state.isEmpty)
+        console.log('isMyHome',state.isMyHome)
         state.myUserInfo.userId = loginRes.user?.userId;
         state.myUserInfo.userName = loginRes.user?.userName;
         storage.set('userId', state.myUserInfo.userId);

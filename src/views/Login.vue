@@ -29,6 +29,16 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState("user", {
+      isLogin: (state) => state.isLogin,
+      isMyHome: (state) => state.isMyHome,
+      // isEmpty: (state) => state.isEmpty,
+      myUserInfo: (state) => state.myUserInfo,
+      // otherUserInfo: (state) => state.otherUserInfo,
+      otherUserInfo: (state) => state.otherUserInfo,
+    }),
+  },
   methods: {
     onSubmit() {
       const input = {
@@ -39,9 +49,13 @@ export default {
         console.log(res);
         const vn = this;
         if (checkErros(vn, res, "login")) {
-          this.$message.success('登陆成功!')
+          this.$message.success("登陆成功!");
           // 登陆成功后运行下面的代码
-          this.$router.push('/user/'+res.data.login.user.userId)
+          if (this.isMyHome) {
+            this.$router.push("/user/" + res.data.login.user.userId);
+          } else {
+            this.$router.push("/user/" + this.otherUserInfo.userId);
+          }
         }
       });
     },

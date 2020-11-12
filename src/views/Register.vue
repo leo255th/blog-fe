@@ -68,6 +68,16 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState("user", {
+      isLogin: (state) => state.isLogin,
+      isMyHome: (state) => state.isMyHome,
+      // isEmpty: (state) => state.isEmpty,
+      myUserInfo: (state) => state.myUserInfo,
+      // otherUserInfo: (state) => state.otherUserInfo,
+      otherUserInfo: (state) => state.otherUserInfo,
+    }),
+  },
   methods: {
     onSubmit(formName) {
       const vn = this;
@@ -84,6 +94,11 @@ export default {
             if (checkErros(vn, res, "register")) {
               this.$message.success("欢迎使用个人博客!");
               this.$router.push("/user/" + res.data.register.user.userId);
+              if (this.isMyHome) {
+                this.$router.push("/user/" + res.data.register.user.userId);
+              } else {
+                this.$router.push("/user/" + this.otherUserInfo.userId);
+              }
             }
           });
         } else {
