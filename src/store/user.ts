@@ -191,7 +191,7 @@ export default {
         },
         fetchPolicy: 'no-cache'
       })
-      commit('refreshLoginState', res.data?.register);
+      commit('refreshRegisterState', res.data?.register);
       return res;
     },
     // 获取用户领域
