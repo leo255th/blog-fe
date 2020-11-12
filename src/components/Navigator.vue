@@ -22,13 +22,13 @@
         v-if="isMyHome & !isEmpty"
         >我的首页</router-link
       >
-      <router-link
+      <!-- <router-link
         class="nav-item"
         key="2"
         to="/edit"
         v-if="isMyHome & !isEmpty"
         >文章管理</router-link
-      >
+      > -->
       <router-link class="nav-item" key="3" to="/" v-if="!isEmpty"
         >文章列表</router-link
       >

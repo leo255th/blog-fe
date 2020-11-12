@@ -1,6 +1,6 @@
-import { ADD_ARTICLE, GET_ARTICLE, GET_ARTICLES, GET_FIELDS } from './gql/articles.gql'
+import { ADD_ARTICLE, GET_ARTICLE, GET_ARTICLES, GET_FIELDS, RE_EDIT_ARTICLE } from './gql/articles.gql'
 import { myClient } from './gql/graphql.client'
-import { AddArticleInput, AddArticleRes, ArticleEntity, ArticleList, ArticlesFilterInput, FieldEntity, Mutation, Query } from './gql/types'
+import { AddArticleInput, AddArticleRes, ArticleEntity, ArticleList, ArticlesFilterInput, EditArticleInput, EditArticleRes, FieldEntity, Mutation, Query } from './gql/types'
 
 export default {
   namespaced: true,
@@ -37,6 +37,22 @@ export default {
       })
       if(res.data){
         return res.data?.addArticle
+      }else{
+        return false;
+      }
+    },
+    // 编辑文章
+    // 暂时只需要获取结果，不需要更新store
+    async editArticle({commit}:any,input:EditArticleInput) :Promise<EditArticleRes|boolean>{
+      const res=await myClient.mutate<Mutation>({
+        mutation:RE_EDIT_ARTICLE,
+        variables:{
+          input
+        },
+        fetchPolicy:'no-cache'
+      })
+      if(res.data){
+        return res.data?.editArticle
       }else{
         return false;
       }

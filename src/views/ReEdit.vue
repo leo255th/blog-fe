@@ -52,7 +52,7 @@
         <!-- <el-button class="cancel" @click="onCancel">重置</el-button> -->
         <quillEditor class="myeditor" v-model="content"></quillEditor>
         <el-button class="submit" type="primary" @click="onSubmit"
-          >确认</el-button
+          >确认编辑</el-button
         >
       </el-tab-pane>
       <el-tab-pane class="pane" label="预览" name="preview">
@@ -76,12 +76,21 @@ import { quillEditor } from "vue-quill-editor";
 import { mapActions, mapState } from "vuex";
 export default {
   created() {
+    this.getArticleDetail(+this.$route.params.articleId).then(res=>{
+      this.content=res.content;
+      this.title=res.title;
+      this.field=res.field;
+      this.description=res.description;
+      this.tags=res.tags;
+      this.id=res.id
+    })
     this.getFields().then(() => {
       console.log("获取到的fields是:", this.fields);
     });
   },
   data() {
     return {
+      id:"",
       content: "",
       activeName: "edit",
       title: "",
@@ -104,6 +113,7 @@ export default {
   methods: {
     onSubmit() {
       const input = {
+        id:this.id,
         userId: this.myUserInfo.userId,
         title: this.title,
         description: this.description,
@@ -112,14 +122,14 @@ export default {
         tags: this.tags,
       };
       console.log("将发送给后端的input是", input);
-      this.addArticle(input).then((res) => {
+      this.editArticle(input).then((res) => {
         if (res) {
-          this.$message.success("文章发布成功！");
+          this.$message.success("文章修改成功！");
           // 这里加路由跳转逻辑
           this.$router.push("/article/" + res.article.articleId);
           console.log(res);
         } else {
-          this.$message.error("服务器错误，文章发布失败！");
+          this.$message.error("服务器错误，文章修改失败！");
         }
       });
     },
@@ -128,7 +138,8 @@ export default {
     },
     ...mapActions("articles", {
       getFields: "getFields",
-      addArticle: "addArticle",
+      editArticle: "editArticle",
+      getArticleDetail: "getArticleDetail",
     }),
   },
 };

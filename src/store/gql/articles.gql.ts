@@ -27,6 +27,26 @@ mutation($input:AddArticleInput!){
   }
 }
 `
+export const RE_EDIT_ARTICLE=gql`
+mutation($input:EditArticleInput!){
+  editArticle(input:$input){
+    res{
+      done
+      errMsg
+    }
+    article{
+      articleId
+      data{
+        id
+        userId
+        title
+        description
+      }
+    }
+  }
+}
+`
+
 export const GET_ARTICLES=gql`
 query($input:ArticlesFilterInput!){
   articles(input:$input){

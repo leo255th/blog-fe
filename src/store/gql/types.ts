@@ -90,6 +90,8 @@ export type ArticleEntity = {
   isDeleted: Scalars['Boolean'];
   /** 文章的标签 */
   tags: Array<Scalars['String']>;
+  /** 文章的作者名 */
+  userName: Scalars['String'];
 };
 
 
@@ -354,6 +356,8 @@ export type EditArticleInput = {
   userId: Scalars['Int'];
   /** 文章的标题 */
   title: Scalars['String'];
+  /** 文章的描述 */
+  description: Scalars['String'];
   /** 文章的内容（富文本） */
   content: Scalars['String'];
   /** 文章的领域 */
