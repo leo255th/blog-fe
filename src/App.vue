@@ -1,6 +1,6 @@
 s<template>
   <div id="app">
-    <el-container>
+    <!-- <el-container>
       <el-header>
         <navigator></navigator>
       </el-header>
@@ -12,7 +12,12 @@ s<template>
       <el-footer>
         <my-footer></my-footer>
       </el-footer>
-    </el-container>
+    </el-container> -->
+    <h1>通知</h1>
+    <div>本站今天闭站，感谢长久以来的支持</div>
+    <div>2020/11/12 - 2020/11/13</div>
+    
+    
   </div>
 </template>
 
